@@ -12,7 +12,7 @@ class ApiAgent {
     receiveDataWhenStatusError: true,
     followRedirects: true,
     headers: {"Accept": "application/json"},
-    validateStatus: (status) => status == 200 || status == 422/*  || status == 201 */,
+    validateStatus: (status) => status == 200 || status == 422 || status == 201,
     contentType: "application/json"
   );
 

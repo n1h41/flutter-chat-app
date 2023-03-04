@@ -15,8 +15,7 @@ class ProviderLogger extends ProviderObserver {
   ) {
     _logger.i('''
 Provider: "${provider.name ?? provider.runtimeType}"
-PreviousValue: "$previousValue"
-NewValue: "$newValue"
-''');
+PreviousValue: "${previousValue.toString()}"
+NewValue: "${newValue.toString()}"''');
   }
 }
