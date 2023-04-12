@@ -5,14 +5,17 @@ class FormTextField extends StatelessWidget {
     super.key,
     required this.fieldLabel,
     required this.validator,
+    required this.controller,
   });
 
   final String fieldLabel;
-  final String Function(String?) validator;
+  final String? Function(String?) validator;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       validator: validator,
       decoration: InputDecoration(
         border: const OutlineInputBorder(

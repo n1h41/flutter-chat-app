@@ -9,6 +9,7 @@ import 'package:chat_app/core/error/failures.dart' as _i5;
 import 'package:chat_app/features/auth/domain/entitites/user.dart' as _i7;
 import 'package:chat_app/features/auth/domain/repositories/auth_repository.dart'
     as _i3;
+import 'package:chat_app/features/auth/domain/usecases/login_user.dart' as _i8;
 import 'package:chat_app/features/auth/domain/usecases/register_user.dart'
     as _i6;
 import 'package:dartz/dartz.dart' as _i2;
@@ -61,19 +62,20 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, Object>> loginUser(_i7.User? user) =>
+  _i4.Future<_i2.Either<_i5.Failure, _i7.User>> loginUser(
+          _i8.LoginUserParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #loginUser,
-          [user],
+          [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, Object>>.value(
-            _FakeEither_0<_i5.Failure, Object>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i7.User>>.value(
+            _FakeEither_0<_i5.Failure, _i7.User>(
           this,
           Invocation.method(
             #loginUser,
-            [user],
+            [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, Object>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.User>>);
 }

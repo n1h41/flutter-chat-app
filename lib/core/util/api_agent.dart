@@ -7,6 +7,7 @@ class ApiAgent {
   Dio dio = Dio(_baseOptions);
 
   static final BaseOptions _baseOptions = BaseOptions(
+    connectTimeout: const Duration(seconds: 5),
     baseUrl: Config.BASE_URL,
     responseType: ResponseType.json,
     receiveDataWhenStatusError: true,

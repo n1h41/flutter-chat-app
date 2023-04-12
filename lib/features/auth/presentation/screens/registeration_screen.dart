@@ -1,17 +1,50 @@
-import 'package:chat_app/core/presentation/widgets/textFields/form_text_field.dart';
-import 'package:chat_app/core/presentation/widgets/textFields/password_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../viemodels/registration_screen_state.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/widgets/textFields/form_text_field.dart';
+import '../../domain/usecases/register_user.dart';
+import '../viewModels/registrationScreen/registration_screen_provider.dart';
+import '../widgets/auth_submit_button.dart';
+import '../widgets/password_field.dart';
 
-class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({super.key});
+class RegistrationScreen extends HookConsumerWidget {
+  const RegistrationScreen({super.key});
 
-  final GlobalKey<FormState> registrationFormKey = GlobalKey<FormState>();
+  void _submitRegistrationForm(RegisterUserParams params, WidgetRef ref) async {
+    await ref
+        .read(registrationScreenViewModelProvider.notifier)
+        .registerUser(params);
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final registrationFormStateKey = useMemoized(GlobalKey<FormState>.new);
+    final firstName = useTextEditingController();
+    final lastName = useTextEditingController();
+    final email = useTextEditingController();
+    final password = useTextEditingController();
+    final confirmPassword = useTextEditingController();
+    ref.listen(registrationScreenViewModelProvider, (prev, next) {
+      next.maybeWhen(
+        () => null,
+        success: () => context.goNamed('userVerificationScreen'),
+        error: (e) {
+          if (e is ServerFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(e.message!),
+                showCloseIcon: true,
+              ),
+            );
+          }
+          return null;
+        },
+        orElse: () => null,
+      );
+    });
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register account"),
@@ -19,34 +52,37 @@ class RegistrationScreen extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Form(
-          key: registrationFormKey,
+          key: registrationFormStateKey,
           child: Column(
             children: [
               FormTextField(
+                controller: firstName,
                 fieldLabel: "First Name",
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 3) {
                     return "Please enter your first name";
                   }
-                  return '';
+                  return null;
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
               FormTextField(
+                controller: lastName,
                 fieldLabel: "Last Name",
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 3) {
                     return "Please enter your last name";
                   }
-                  return '';
+                  return null;
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
               FormTextField(
+                controller: email,
                 fieldLabel: "Email",
                 validator: (value) {
                   if (value == null ||
@@ -55,64 +91,62 @@ class RegistrationScreen extends StatelessWidget {
                       !value.contains('.')) {
                     return "Please enter a valid email";
                   }
-                  return '';
+                  return null;
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
-              Consumer(
-                builder: (context, ref, child) {
-                  final bool obscurePassword = ref
-                      .watch(registrationScreenViewModelProvider)
-                      .obscurePassword;
-                  return PasswordField(
-                    onPressed: () {
-                      ref
-                          .read(registrationScreenViewModelProvider.notifier)
-                          .togglePasswordVisibility = !obscurePassword;
-                    },
-                    fieldLabel: "Password",
-                    obscurePassword: obscurePassword,
-                  );
-                },
+              PasswordField(
+                controller: password,
+                fieldLabel: "Password",
               ),
               const SizedBox(
                 height: 10,
               ),
+              PasswordField(
+                controller: confirmPassword,
+                fieldLabel: "Confirm password",
+              ),
+              const Spacer(),
               Consumer(
                 builder: (context, ref, child) {
-                  final bool obscurePassword = ref
-                      .watch(registrationScreenViewModelProvider)
-                      .obscureConfirmPassword;
-                  return PasswordField(
-                    onPressed: () {
-                      ref
-                          .read(registrationScreenViewModelProvider.notifier)
-                          .toggleConfirmPasswordVisibility = !obscurePassword;
+                  final bool isLoading =
+                      ref.watch(registrationScreenViewModelProvider).maybeMap(
+                            (value) => false,
+                            loading: (value) => true,
+                            orElse: () => false,
+                          );
+                  return AuthSubmitButton(
+                    isLoading: isLoading,
+                    submitForm: () {
+                      if (registrationFormStateKey.currentState!.validate()) {
+                        registrationFormStateKey.currentState!.save();
+                        final params = RegisterUserParams(
+                          firstName: firstName.text,
+                          lastName: lastName.text,
+                          email: email.text,
+                          password: password.text,
+                          passwordConfirmation: confirmPassword.text,
+                        );
+                        return _submitRegistrationForm(params, ref);
+                      }
                     },
-                    fieldLabel: "Confirm password",
-                    obscurePassword: obscurePassword,
+                    buttonText: 'Register',
                   );
                 },
               ),
-              const Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text('Register'),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already have an account?'),
+                  TextButton(
+                      onPressed: () {
+                        context.go('/login');
+                      },
+                      child: const Text('Login')),
+                ],
               ),
-              const Spacer(),
             ],
           ),
         ),

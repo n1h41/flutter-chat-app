@@ -13,7 +13,7 @@ _$_RegisterUserParams _$$_RegisterUserParamsFromJson(
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
-      confirmationPassword: json['confirmationPassword'] as String,
+      passwordConfirmation: json['passwordConfirmation'] as String,
     );
 
 Map<String, dynamic> _$$_RegisterUserParamsToJson(
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$_RegisterUserParamsToJson(
       'lastName': instance.lastName,
       'email': instance.email,
       'password': instance.password,
-      'confirmationPassword': instance.confirmationPassword,
+      'passwordConfirmation': instance.passwordConfirmation,
     };

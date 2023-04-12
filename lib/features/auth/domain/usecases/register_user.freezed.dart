@@ -24,7 +24,7 @@ mixin _$RegisterUserParams {
   String get lastName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
-  String get confirmationPassword => throw _privateConstructorUsedError;
+  String get passwordConfirmation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +43,7 @@ abstract class $RegisterUserParamsCopyWith<$Res> {
       String lastName,
       String email,
       String password,
-      String confirmationPassword});
+      String passwordConfirmation});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$RegisterUserParamsCopyWithImpl<$Res, $Val extends RegisterUserParams>
     Object? lastName = null,
     Object? email = null,
     Object? password = null,
-    Object? confirmationPassword = null,
+    Object? passwordConfirmation = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -82,9 +82,9 @@ class _$RegisterUserParamsCopyWithImpl<$Res, $Val extends RegisterUserParams>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmationPassword: null == confirmationPassword
-          ? _value.confirmationPassword
-          : confirmationPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirmation: null == passwordConfirmation
+          ? _value.passwordConfirmation
+          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -103,7 +103,7 @@ abstract class _$$_RegisterUserParamsCopyWith<$Res>
       String lastName,
       String email,
       String password,
-      String confirmationPassword});
+      String passwordConfirmation});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$_RegisterUserParamsCopyWithImpl<$Res>
     Object? lastName = null,
     Object? email = null,
     Object? password = null,
-    Object? confirmationPassword = null,
+    Object? passwordConfirmation = null,
   }) {
     return _then(_$_RegisterUserParams(
       firstName: null == firstName
@@ -140,9 +140,9 @@ class __$$_RegisterUserParamsCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      confirmationPassword: null == confirmationPassword
-          ? _value.confirmationPassword
-          : confirmationPassword // ignore: cast_nullable_to_non_nullable
+      passwordConfirmation: null == passwordConfirmation
+          ? _value.passwordConfirmation
+          : passwordConfirmation // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -156,7 +156,7 @@ class _$_RegisterUserParams implements _RegisterUserParams {
       required this.lastName,
       required this.email,
       required this.password,
-      required this.confirmationPassword});
+      required this.passwordConfirmation});
 
   factory _$_RegisterUserParams.fromJson(Map<String, dynamic> json) =>
       _$$_RegisterUserParamsFromJson(json);
@@ -170,11 +170,11 @@ class _$_RegisterUserParams implements _RegisterUserParams {
   @override
   final String password;
   @override
-  final String confirmationPassword;
+  final String passwordConfirmation;
 
   @override
   String toString() {
-    return 'RegisterUserParams(firstName: $firstName, lastName: $lastName, email: $email, password: $password, confirmationPassword: $confirmationPassword)';
+    return 'RegisterUserParams(firstName: $firstName, lastName: $lastName, email: $email, password: $password, passwordConfirmation: $passwordConfirmation)';
   }
 
   @override
@@ -189,14 +189,14 @@ class _$_RegisterUserParams implements _RegisterUserParams {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
-            (identical(other.confirmationPassword, confirmationPassword) ||
-                other.confirmationPassword == confirmationPassword));
+            (identical(other.passwordConfirmation, passwordConfirmation) ||
+                other.passwordConfirmation == passwordConfirmation));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, firstName, lastName, email, password, confirmationPassword);
+      runtimeType, firstName, lastName, email, password, passwordConfirmation);
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +219,7 @@ abstract class _RegisterUserParams implements RegisterUserParams {
       required final String lastName,
       required final String email,
       required final String password,
-      required final String confirmationPassword}) = _$_RegisterUserParams;
+      required final String passwordConfirmation}) = _$_RegisterUserParams;
 
   factory _RegisterUserParams.fromJson(Map<String, dynamic> json) =
       _$_RegisterUserParams.fromJson;
@@ -233,7 +233,7 @@ abstract class _RegisterUserParams implements RegisterUserParams {
   @override
   String get password;
   @override
-  String get confirmationPassword;
+  String get passwordConfirmation;
   @override
   @JsonKey(ignore: true)
   _$$_RegisterUserParamsCopyWith<_$_RegisterUserParams> get copyWith =>

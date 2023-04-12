@@ -1,48 +1,23 @@
-import 'package:chat_app/core/util/provider_logger.dart';
+import 'package:chat_app/core/theme/app_theme.dart';
+import 'package:chat_app/core/util/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
-import 'core/util/router.dart';
+import 'core/util/provider_logger.dart';
+import 'features/app/app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Storage().init();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: lightTheme.scaffoldBackgroundColor,
+    ),
+  );
   runApp(ProviderScope(
     observers: [ProviderLogger(Logger())],
-    child: const MyApp(),
+    child: const ChatApp(),
   ));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      builder: (context, child) => _Unfocus(child: child!),
-      debugShowCheckedModeBanner: false,
-      title: 'Chat application',
-      theme: ThemeData.dark(
-        useMaterial3: true,
-      ),
-      routerConfig: router,
-    );
-  }
-}
-
-class _Unfocus extends ConsumerWidget {
-  const _Unfocus({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: child,
-    );
-  }
 }

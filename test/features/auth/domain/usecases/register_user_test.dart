@@ -15,17 +15,18 @@ void main() {
 
   setUp(() {
     mockAuthRepository = MockAuthRepository();
-    usecase = RegisterUser(repository: mockAuthRepository);
+    usecase = RegisterUser(mockAuthRepository);
     params = const RegisterUserParams(
       firstName: 'John',
       lastName: 'Doe',
       email: 'johndoe@gmail.com',
       password: 'password',
-      confirmationPassword: 'password',
+      passwordConfirmation: 'password',
     );
   });
 
-  test('should return a string saying "User registered" when registered successfully',
+  test(
+      'should return a string saying "User registered" when registered successfully',
       () async {
     when(mockAuthRepository.registerUser(any))
         .thenAnswer((_) async => const Right("User created successfully"));

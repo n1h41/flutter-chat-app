@@ -1,0 +1,9 @@
+{
+    "accessToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDE3MmEwYzU5MzFiOGIzNjM3ZDIwYTMiLCJlbWFpbCI6Im5paGFsbmludTI1QGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6Ik5paGFsIiwibGFzdE5hbWUiOiJBYmR1bGxhIiwiY3JlYXRlZEF0IjoiMjAyMy0wMy0xOVQxNToyODoxMi4yODNaIiwidXBkYXRlZEF0IjoiMjAyMy0wMy0xOVQxNToyODoyNy4zNjlaIiwiX192IjowLCJpYXQiOjE2NzkyNDYxNDcsImV4cCI6MTY3OTI0NzA0N30.N7_up_qFMdEyGt37O-x8L8UEauYIlgGgvE9nbpC436JamOuywapF0P1qeINlayIgrRImgNYmkixuZrZZI1P0zxmNHJa2YoBzOs58SgLTSWUeG_O_WVI51mRrLly-C5fn70BiqK8eyt0Uif4MGwZZ__W8hsPhkEg8inK90PDNYVRmzhPZJE7-6UQQnmwckvzln2XPVgnczDl_wBblLjQFHYSsVTNdPfrVSQuyEfvJSj7Jq3Bl-CGfZLVSTibvgL3whUzD5MI1tc7exfRUzy5YRwMBURA5VuTmgJf0668nDSIo8woc97n0CL9rnpP-Z1FvdwXzpThEeS_O7mm3SfJmhQ",
+    "refreshToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZXNzaW9uIjoiNjQxNzQzNDM1OTMxYjhiMzYzN2QyMGFiIiwiaWF0IjoxNjc5MjQ2MTQ3LCJleHAiOjE3MTA4MDM3NDd9.MrLbBahNMtrBxfsfOdvwrGwriSmLFZbEn6e3vxc1BJzszSx6wylqmOQgX46gUjluFDRy-BUAUJP37WM_WPsE-NtvxfFiBfYpbZzgaxXzFKqWUNIS1AbUXMqTe3BpfHlcVbPhEGNkbzDai3mYn99SRzFpLArsU2Ykt38HkUEpmno",
+    "payload": {
+        "firstName": "Nihal",
+        "lastName": "Abdulla",
+        "email": "nihalninu25@gmail.com"
+    }
+}

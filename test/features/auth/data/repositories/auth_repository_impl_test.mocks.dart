@@ -5,10 +5,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:chat_app/core/error/failures.dart' as _i6;
+import 'package:chat_app/core/error/failures.dart' as _i5;
+import 'package:chat_app/core/util/secure_storage.dart' as _i8;
 import 'package:chat_app/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i3;
-import 'package:chat_app/features/auth/data/models/user_model.dart' as _i5;
+import 'package:chat_app/features/auth/domain/usecases/login_user.dart' as _i6;
 import 'package:chat_app/features/auth/domain/usecases/register_user.dart'
     as _i7;
 import 'package:dartz/dartz.dart' as _i2;
@@ -25,18 +26,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeObject_0 extends _i1.SmartFake implements Object {
-  _FakeObject_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeEither_1<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_1(
+class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
+  _FakeEither_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -55,34 +46,81 @@ class MockAuthRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i4.Future<Object> login(_i5.UserModel? user) => (super.noSuchMethod(
+  _i4.Future<_i2.Either<_i5.Failure, Map<String, dynamic>>> login(
+          _i6.LoginUserParams? params) =>
+      (super.noSuchMethod(
         Invocation.method(
           #login,
-          [user],
+          [params],
         ),
-        returnValue: _i4.Future<Object>.value(_FakeObject_0(
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, Map<String, dynamic>>>.value(
+                _FakeEither_0<_i5.Failure, Map<String, dynamic>>(
           this,
           Invocation.method(
             #login,
-            [user],
+            [params],
           ),
         )),
-      ) as _i4.Future<Object>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, Map<String, dynamic>>>);
   @override
-  _i4.Future<_i2.Either<_i6.Failure, String>> register(
+  _i4.Future<_i2.Either<_i5.Failure, String>> register(
           _i7.RegisterUserParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #register,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i6.Failure, String>>.value(
-            _FakeEither_1<_i6.Failure, String>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
+            _FakeEither_0<_i5.Failure, String>(
           this,
           Invocation.method(
             #register,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i6.Failure, String>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
+}
+
+/// A class which mocks [SecureStorage].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSecureStorage extends _i1.Mock implements _i8.SecureStorage {
+  MockSecureStorage() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<void> write(
+    String? key,
+    String? value,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #write,
+          [
+            key,
+            value,
+          ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+  @override
+  _i4.Future<String?> read(String? key) => (super.noSuchMethod(
+        Invocation.method(
+          #read,
+          [key],
+        ),
+        returnValue: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
+  @override
+  _i4.Future<void> deleteAll() => (super.noSuchMethod(
+        Invocation.method(
+          #deleteAll,
+          [],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

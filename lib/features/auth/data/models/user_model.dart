@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../../domain/entitites/user.dart';
 
+part 'user_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class UserModel extends User {
   const UserModel({
     String? firstName,
@@ -19,23 +24,8 @@ class UserModel extends User {
           verified: verified,
         );
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        email: json['email'],
-        password: json['password'],
-        verificationCode: json['verificationCode'],
-        passwordResetCode: json['passwordResetCode'],
-        verified: json['verified'],
-      );
+  factory UserModel.fromJson(Map<String, Object?> json) =>
+      _$UserModelFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'password': password,
-        'verificationCode': verificationCode,
-        'passwordResetCode': passwordResetCode,
-        'verified': verified,
-      }..removeWhere((key, value) => value == null);
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

@@ -1,8 +1,13 @@
-import 'package:chat_app/features/auth/data/datasources/module.dart';
-import 'package:chat_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:chat_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../../core/util/secure_storage.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../datasources/module.dart';
+import 'auth_repository_impl.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(ref.read(authRemoteDataSourceProvider));
+  return AuthRepositoryImpl(
+    ref.read(authRemoteDataSourceProvider),
+    SecureStorage.instance,
+  );
 });
