@@ -37,7 +37,7 @@ class _PasswordFieldState extends State<PasswordField> {
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(8),
+            Radius.circular(22),
           ),
         ),
         contentPadding: const EdgeInsets.all(10),

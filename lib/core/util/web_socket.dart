@@ -13,6 +13,6 @@ class WebSocket {
   }
 
   WebSocketChannel connect() {
-    return WebSocketChannel.connect(Uri.parse(Config.WEBSOCKET_URL));
+    return WebSocketChannel.connect(Uri.parse(Config.websocketUrl));
   }
 }

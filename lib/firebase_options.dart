@@ -66,8 +66,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '705668070834',
     projectId: 'chat-application-55c82',
     storageBucket: 'chat-application-55c82.appspot.com',
-    androidClientId: '705668070834-87ef3kpq59tqgqa5im8fjafa9skl7mrl.apps.googleusercontent.com',
-    iosClientId: '705668070834-fbo56b941lah4ugq6tjo33nhigu1a6vq.apps.googleusercontent.com',
+    androidClientId:
+        '705668070834-87ef3kpq59tqgqa5im8fjafa9skl7mrl.apps.googleusercontent.com',
+    iosClientId:
+        '705668070834-fbo56b941lah4ugq6tjo33nhigu1a6vq.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatApp',
   );
 
@@ -77,8 +79,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '705668070834',
     projectId: 'chat-application-55c82',
     storageBucket: 'chat-application-55c82.appspot.com',
-    androidClientId: '705668070834-87ef3kpq59tqgqa5im8fjafa9skl7mrl.apps.googleusercontent.com',
-    iosClientId: '705668070834-fbo56b941lah4ugq6tjo33nhigu1a6vq.apps.googleusercontent.com',
+    androidClientId:
+        '705668070834-87ef3kpq59tqgqa5im8fjafa9skl7mrl.apps.googleusercontent.com',
+    iosClientId:
+        '705668070834-fbo56b941lah4ugq6tjo33nhigu1a6vq.apps.googleusercontent.com',
     iosBundleId: 'com.example.chatApp',
   );
 }

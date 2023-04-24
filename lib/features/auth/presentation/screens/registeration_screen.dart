@@ -56,6 +56,7 @@ class RegistrationScreen extends HookConsumerWidget {
           child: Column(
             children: [
               FormTextField(
+                iconAvailable: false,
                 controller: firstName,
                 fieldLabel: "First Name",
                 validator: (value) {
@@ -69,6 +70,7 @@ class RegistrationScreen extends HookConsumerWidget {
                 height: 10,
               ),
               FormTextField(
+                iconAvailable: false,
                 controller: lastName,
                 fieldLabel: "Last Name",
                 validator: (value) {
@@ -82,6 +84,7 @@ class RegistrationScreen extends HookConsumerWidget {
                 height: 10,
               ),
               FormTextField(
+                iconAvailable: false,
                 controller: email,
                 fieldLabel: "Email",
                 validator: (value) {

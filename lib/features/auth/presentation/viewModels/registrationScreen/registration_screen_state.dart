@@ -1,4 +1,3 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../core/error/failures.dart';
@@ -10,7 +9,7 @@ class RegistrationScreenState with _$RegistrationScreenState {
   const factory RegistrationScreenState() = _RegistrationScreenState;
 
   const factory RegistrationScreenState.loading() = _Loading;
-  
+
   const factory RegistrationScreenState.error(Failure error) = _Error;
 
   const factory RegistrationScreenState.success() = _Success;

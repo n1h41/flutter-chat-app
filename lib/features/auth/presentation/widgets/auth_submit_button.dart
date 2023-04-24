@@ -17,20 +17,21 @@ class AuthSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      height: 50,
+      width: 130,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           foregroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(8),
+              Radius.circular(22),
             ),
           ),
         ),
         onPressed: _isLoading ? null : _submitForm,
-        child: _isLoading
-            ? const CircularProgressIndicator()
-            : Text(_buttonText),
+        child:
+            _isLoading ? const CircularProgressIndicator() : Text(_buttonText),
       ),
     );
   }
