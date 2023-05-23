@@ -3,7 +3,7 @@
 import 'package:chat_app/core/error/failures.dart';
 import 'package:chat_app/core/widgets/textFields/form_text_field.dart';
 import 'package:chat_app/features/auth/domain/usecases/login_user.dart';
-import 'package:chat_app/features/auth/presentation/login/controller/module.dart';
+import 'package:chat_app/features/auth/presentation/controller/module.dart';
 import 'package:chat_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:chat_app/features/auth/presentation/widgets/password_field.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginView extends HookConsumerWidget {
   void _submitLoginForm(WidgetRef ref, LoginUserParams params) async {
-    await ref.read(loginVewControllerProvider.notifier).login(params);
+    await ref.read(authControllerProvider.notifier).loginUser(params);
   }
 
   const LoginView({super.key});
@@ -24,12 +24,12 @@ class LoginView extends HookConsumerWidget {
     final loginFormStateKey = useMemoized(GlobalKey<FormState>.new);
     final TextEditingController email = useTextEditingController();
     final TextEditingController password = useTextEditingController();
-    ref.listen(loginVewControllerProvider, (_, next) {
+    ref.listen(authControllerProvider, (_, next) {
       next.maybeWhen(
-        data: (user) {
+        authenticated: () {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('User ${user.firstName} Logged in Successfulley'),
+              content: Text('User logged in successfully'),
             ),
           );
           context.goNamed('/home');
@@ -320,7 +320,7 @@ class LoginView extends HookConsumerWidget {
         ),
         floatingActionButton: Consumer(
           builder: (context, ref, child) {
-            final state = ref.watch(loginVewControllerProvider);
+            final state = ref.watch(authControllerProvider);
             return AuthSubmitButton(
             isLoading: state.maybeWhen(loading: () => true,orElse: () => false,),
             submitForm: () {

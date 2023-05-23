@@ -29,6 +29,13 @@ class AppRouter {
         builder: (context, state) => const HomeView(),
       ),
     ],
+    redirect: (context, state) {
+      final loginLocation = GoRouter.of(context).namedLocation(APP_PAGES.loginView.routeName);
+      if (!_controller.loginState) {
+        return loginLocation;
+      }
+      return null;
+    }
   );
 
   GoRouter get router => _router;

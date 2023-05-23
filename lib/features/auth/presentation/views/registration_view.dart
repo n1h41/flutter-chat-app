@@ -1,5 +1,5 @@
 import 'package:chat_app/features/auth/domain/usecases/register_user.dart';
-import 'package:chat_app/features/auth/presentation/register/controller/module.dart';
+import 'package:chat_app/features/auth/presentation/controller/module.dart';
 import 'package:chat_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:chat_app/features/auth/presentation/widgets/password_field.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class RegistrationView extends HookConsumerWidget {
 
   void _submitRegistrationForm(RegisterUserParams params, WidgetRef ref) async {
     await ref
-        .read(registrationViewControllerProvider.notifier)
+        .read(authControllerProvider.notifier)
         .registerUser(params);
   }
 
@@ -27,9 +27,9 @@ class RegistrationView extends HookConsumerWidget {
     final email = useTextEditingController();
     final password = useTextEditingController();
     final confirmPassword = useTextEditingController();
-    ref.listen(registrationViewControllerProvider, (prev, next) {
+    ref.listen(authControllerProvider, (prev, next) {
       next.maybeWhen(
-        data: () => context.goNamed('userVerificationScreen'),
+        registered: () => context.goNamed('userVerificationScreen'),
         error: (e) {
           if (e is ServerFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -114,7 +114,7 @@ class RegistrationView extends HookConsumerWidget {
               Consumer(
                 builder: (context, ref, child) {
                   final bool isLoading =
-                      ref.watch(registrationViewControllerProvider).maybeMap(
+                      ref.watch(authControllerProvider).maybeMap(
                             loading: (value) => true,
                             orElse: () => false,
                           );

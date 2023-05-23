@@ -10,8 +10,6 @@ String ONBOARDING_KEY = "GD2G82CG9G82VDFGVD22DVG";
 
 class AppController with ChangeNotifier {
   late final SharedPreferences _prefs;
-  final StreamController<bool> _loginStateChange =
-      StreamController<bool>.broadcast();
   bool _isLoggedIn = false;
   bool _initialized = false;
   bool _onboardingComplete = false;
@@ -21,11 +19,10 @@ class AppController with ChangeNotifier {
   bool get loginState => _isLoggedIn;
   bool get initialized => _initialized;
   bool get onboarding => _onboardingComplete;
-  StreamController<bool> get loginStateChange => _loginStateChange;
 
   set loginState(bool value) {
     _isLoggedIn = value;
-    _loginStateChange.add(value);
+    _prefs.setBool(LOGIN_KEY, value);
     notifyListeners();
   }
 
@@ -39,16 +36,9 @@ class AppController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init() async {
+  void init() {
     _onboardingComplete = _prefs.getBool(ONBOARDING_KEY) ?? false;
     _isLoggedIn = _prefs.getBool(LOGIN_KEY) ?? false;
-
-    await Future.delayed(
-      const Duration(
-        seconds: 2,
-      ),
-    );
-
     _initialized = true;
     notifyListeners();
   }
