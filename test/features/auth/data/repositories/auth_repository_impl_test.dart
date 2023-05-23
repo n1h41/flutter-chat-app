@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:chat_app/core/util/secure_storage.dart';
+import 'package:chat_app/core/helpers/secure_storage.dart';
 import 'package:chat_app/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:chat_app/features/auth/data/models/user_model.dart';
 import 'package:chat_app/features/auth/data/repositories/auth_repository_impl.dart';

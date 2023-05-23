@@ -1,11 +1,11 @@
 import 'package:chat_app/core/theme/app_theme.dart';
-import 'package:chat_app/core/util/storage.dart';
+import 'package:chat_app/core/helpers/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
-import 'core/util/provider_logger.dart';
+import 'core/helpers/provider_logger.dart';
 import 'features/app/app.dart';
 
 void main() async {
@@ -16,8 +16,14 @@ void main() async {
       statusBarColor: lightTheme.scaffoldBackgroundColor,
     ),
   );
-  runApp(ProviderScope(
-    observers: [ProviderLogger(Logger())],
-    child: const ChatApp(),
-  ));
+  runApp(
+    ProviderScope(
+      observers: [
+        ProviderLogger(
+          Logger(),
+        ),
+      ],
+      child: const ChatApp(),
+    ),
+  );
 }

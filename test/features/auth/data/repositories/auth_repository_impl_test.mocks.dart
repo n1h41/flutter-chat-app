@@ -6,7 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:chat_app/core/error/failures.dart' as _i5;
-import 'package:chat_app/core/util/secure_storage.dart' as _i8;
+import 'package:chat_app/core/helpers/secure_storage.dart' as _i8;
 import 'package:chat_app/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i3;
 import 'package:chat_app/features/auth/domain/usecases/login_user.dart' as _i6;

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../../core/util/secure_storage.dart';
-import '../../../../core/util/storage.dart';
+import '../../../../core/helpers/secure_storage.dart';
+import '../../../../core/helpers/storage.dart';
 import '../../domain/entitites/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_user.dart';
@@ -25,7 +25,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, User>> loginUser(LoginUserParams params) async {
     final response = await dataSource.login(params);
     return response.fold(
-      (failure) => Left(failure),
+      (failure) {
+        return Left(failure);
+      },
       (loginResponse) async {
         await Storage().setValue<bool>('isLoggedIn', true);
         saveTokens(tokens: loginResponse);
