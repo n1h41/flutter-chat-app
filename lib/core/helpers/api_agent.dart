@@ -46,8 +46,8 @@ class ApiAgent {
           return handler.next(options);
         },
         onError: (e, handler) async {
-          final RequestOptions origin = e.response!.requestOptions;
-          if (e.response?.statusCode == 401) {
+          final RequestOptions? origin = e.response?.requestOptions;
+          if (e.response?.statusCode == 401 && origin != null) {
             try {
               Response<dynamic> data = await dio.post('/auth/sessions/refresh');
               await SecureStorage.instance
@@ -58,6 +58,7 @@ class ApiAgent {
               Logger().e(err);
             }
           }
+          // handler.reject(e);
           handler.next(e);
         },
       ),

@@ -8,7 +8,7 @@ String LOGIN_KEY = "5FD6G46SDF4GD64F1VG9SD68";
 // ignore: non_constant_identifier_names
 String ONBOARDING_KEY = "GD2G82CG9G82VDFGVD22DVG";
 
-class AppController with ChangeNotifier {
+/* class AppController with ChangeNotifier {
   late final SharedPreferences _prefs;
   bool _isLoggedIn = false;
   bool _initialized = false;
@@ -42,4 +42,4 @@ class AppController with ChangeNotifier {
     _initialized = true;
     notifyListeners();
   }
-}
+} */

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FormTextField extends StatelessWidget {
   const FormTextField({
@@ -23,9 +24,9 @@ class FormTextField extends StatelessWidget {
       controller: controller,
       validator: validator,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(
+        border: OutlineInputBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(22),
+            Radius.circular(8.r),
           ),
         ),
         contentPadding: const EdgeInsets.all(10),

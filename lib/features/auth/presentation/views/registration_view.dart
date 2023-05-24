@@ -1,9 +1,11 @@
+import 'package:chat_app/core/routes/router_utils.dart';
 import 'package:chat_app/features/auth/domain/usecases/register_user.dart';
-import 'package:chat_app/features/auth/presentation/controller/module.dart';
+import 'package:chat_app/features/auth/presentation/controller/auth_controller.dart';
 import 'package:chat_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:chat_app/features/auth/presentation/widgets/password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,6 +38,7 @@ class RegistrationView extends HookConsumerWidget {
               SnackBar(
                 content: Text(e.message!),
                 showCloseIcon: true,
+                closeIconColor: Colors.white,
               ),
             );
           }
@@ -47,6 +50,7 @@ class RegistrationView extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register account"),
+        elevation: 0,
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -54,6 +58,9 @@ class RegistrationView extends HookConsumerWidget {
           key: registrationFormStateKey,
           child: Column(
             children: [
+              SizedBox(
+                height: 10.h,
+              ),
               FormTextField(
                 iconAvailable: false,
                 controller: firstName,
@@ -111,31 +118,34 @@ class RegistrationView extends HookConsumerWidget {
                 fieldLabel: "Confirm password",
               ),
               const Spacer(),
-              Consumer(
-                builder: (context, ref, child) {
-                  final bool isLoading =
-                      ref.watch(authControllerProvider).maybeMap(
-                            loading: (value) => true,
-                            orElse: () => false,
+              SizedBox(
+                width: double.infinity,
+                child: Consumer(
+                  builder: (context, ref, child) {
+                    final bool isLoading =
+                        ref.watch(authControllerProvider).maybeMap(
+                              loading: (value) => true,
+                              orElse: () => false,
+                            );
+                    return AuthSubmitButton(
+                      isLoading: isLoading,
+                      submitForm: () {
+                        if (registrationFormStateKey.currentState!.validate()) {
+                          registrationFormStateKey.currentState!.save();
+                          final params = RegisterUserParams(
+                            firstName: firstName.text,
+                            lastName: lastName.text,
+                            email: email.text,
+                            password: password.text,
+                            passwordConfirmation: confirmPassword.text,
                           );
-                  return AuthSubmitButton(
-                    isLoading: isLoading,
-                    submitForm: () {
-                      if (registrationFormStateKey.currentState!.validate()) {
-                        registrationFormStateKey.currentState!.save();
-                        final params = RegisterUserParams(
-                          firstName: firstName.text,
-                          lastName: lastName.text,
-                          email: email.text,
-                          password: password.text,
-                          passwordConfirmation: confirmPassword.text,
-                        );
-                        return _submitRegistrationForm(params, ref);
-                      }
-                    },
-                    buttonText: 'Register',
-                  );
-                },
+                          return _submitRegistrationForm(params, ref);
+                        }
+                      },
+                      buttonText: 'Register',
+                    );
+                  },
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +153,7 @@ class RegistrationView extends HookConsumerWidget {
                   const Text('Already have an account?'),
                   TextButton(
                     onPressed: () {
-                      context.go('/login');
+                      context.goNamed(APP_PAGES.loginView.routeName);
                     },
                     child: const Text('Login'),
                   ),

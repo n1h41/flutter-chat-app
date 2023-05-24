@@ -1,17 +1,17 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/repositories/module.dart';
 import 'login_user.dart';
 import 'register_user.dart';
 
-final registerUserProvider = Provider<RegisterUser>(
-  (ref) => RegisterUser(
-    ref.watch(authRepositoryProvider),
-  ),
-);
+part 'module.g.dart';
 
-final loginUserProvider = Provider<LoginUser>(
-  (ref) => LoginUser(
-    repository: ref.watch(authRepositoryProvider),
-  ),
-);
+@riverpod
+RegisterUser registerUser(RegisterUserRef ref) {
+  return RegisterUser(ref.read(authRepositoryProvider));
+}
+
+@riverpod
+LoginUser loginUser(LoginUserRef ref) {
+  return LoginUser(repository: ref.read(authRepositoryProvider));
+}

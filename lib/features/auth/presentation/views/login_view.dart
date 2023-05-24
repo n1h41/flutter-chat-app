@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:chat_app/core/error/failures.dart';
+import 'package:chat_app/core/routes/router_utils.dart';
 import 'package:chat_app/core/widgets/textFields/form_text_field.dart';
 import 'package:chat_app/features/auth/domain/usecases/login_user.dart';
-import 'package:chat_app/features/auth/presentation/controller/module.dart';
+import 'package:chat_app/features/auth/presentation/controller/auth_controller.dart';
 import 'package:chat_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:chat_app/features/auth/presentation/widgets/password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,16 +34,18 @@ class LoginView extends HookConsumerWidget {
               content: Text('User logged in successfully'),
             ),
           );
-          context.goNamed('/home');
         },
-        error: (err) {
-          return ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                err is ServerFailure ? err.message! : err.toString(),
+        error: (e) {
+          if (e is ServerFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(e.message!),
+                showCloseIcon: true,
+                closeIconColor: Colors.white,
               ),
-            ),
-          );
+            );
+          }
+          return null;
         },
         orElse: () => null,
       );
@@ -51,8 +55,8 @@ class LoginView extends HookConsumerWidget {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.w,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -63,14 +67,14 @@ class LoginView extends HookConsumerWidget {
                         TextSpan(text: '🇬🇧'),
                         WidgetSpan(
                           child: SizedBox(
-                            width: 5,
+                            width: 5.w,
                           ),
                         ),
                         TextSpan(
                           text: 'ENG',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 18.sp,
                               color: Theme.of(context).primaryColor),
                         ),
                       ],
@@ -80,7 +84,7 @@ class LoginView extends HookConsumerWidget {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 10,
             ),
             RichText(
               text: TextSpan(
@@ -89,7 +93,7 @@ class LoginView extends HookConsumerWidget {
                     text: 'Welcome to\nChatinc',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
-                      fontSize: 45,
+                      fontSize: 42.sp,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
                     ),
@@ -97,46 +101,47 @@ class LoginView extends HookConsumerWidget {
                   TextSpan(
                     text: '👋',
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 30.sp,
                     ),
                   )
                 ],
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 20.h,
             ),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 30,
+                  horizontal: 30.w,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
+                    topLeft: Radius.circular(25.r),
+                    topRight: Radius.circular(25.r),
                   ),
                 ),
                 child: Form(
                   key: loginFormStateKey,
                   child: SingleChildScrollView(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           width: double.infinity,
-                          height: 15,
+                          height: 15.h,
                         ),
                         Text(
                           'Enter your Email',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 8.h,
                         ),
                         FormTextField(
                           iconAvailable: true,
@@ -156,24 +161,24 @@ class LoginView extends HookConsumerWidget {
                           controller: email,
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8.h,
                         ),
                         Text(
                           'Enter your password',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 8.h,
                         ),
                         PasswordField(
                           fieldLabel: 'Password',
                           controller: password,
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 15.h,
                         ),
                         Row(
                           children: [
@@ -188,7 +193,7 @@ class LoginView extends HookConsumerWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 5,
+                              width: 5.w,
                             ),
                             Text(
                               'Or',
@@ -213,12 +218,12 @@ class LoginView extends HookConsumerWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 15.h,
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 20,
+                            vertical: 15.h,
+                            horizontal: 20.w,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -231,7 +236,7 @@ class LoginView extends HookConsumerWidget {
                             children: [
                               Icon(Icons.phone),
                               SizedBox(
-                                width: 12,
+                                width: 12.w,
                               ),
                               Text(
                                 'Phone number',
@@ -243,17 +248,17 @@ class LoginView extends HookConsumerWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 15.h,
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 20,
+                            vertical: 15.h,
+                            horizontal: 20.w,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
-                              Radius.circular(22),
+                              Radius.circular(22.r),
                             ),
                           ),
                           child: Row(
@@ -261,11 +266,11 @@ class LoginView extends HookConsumerWidget {
                             children: [
                               SvgPicture.asset(
                                 'assets/icons/socialMedia/google-logo.svg',
-                                height: 20,
-                                width: 20,
+                                height: 20.h,
+                                width: 20.w,
                               ),
                               SizedBox(
-                                width: 12,
+                                width: 12.w,
                               ),
                               Text(
                                 'Google',
@@ -277,17 +282,17 @@ class LoginView extends HookConsumerWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 15.h,
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 20,
+                            vertical: 15.h,
+                            horizontal: 20.w,
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(
-                              Radius.circular(22),
+                              Radius.circular(22.r),
                             ),
                           ),
                           child: Row(
@@ -295,11 +300,11 @@ class LoginView extends HookConsumerWidget {
                             children: [
                               SvgPicture.asset(
                                 'assets/icons/socialMedia/facebook-logo.svg',
-                                height: 20,
-                                width: 20,
+                                height: 20.h,
+                                width: 20.w,
                               ),
                               SizedBox(
-                                width: 12,
+                                width: 12.w,
                               ),
                               Text(
                                 'Facebook',
@@ -310,6 +315,69 @@ class LoginView extends HookConsumerWidget {
                             ],
                           ),
                         ),
+                        Row(
+                          children: [
+                            Text("Don't have an account ?"),
+                            TextButton(
+                              onPressed: () {
+                                context.goNamed(
+                                    APP_PAGES.registerView.routeName);
+                              },
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                    color: Colors.blueAccent.shade700),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Consumer(
+                            builder: (context, ref, child) {
+                              final state = ref.watch(authControllerProvider);
+                              return AuthSubmitButton(
+                                isLoading: state.maybeWhen(
+                                  loading: () => true,
+                                  orElse: () => false,
+                                ),
+                                submitForm: () {
+                                  {
+                                    if (loginFormStateKey.currentState!
+                                        .validate()) {
+                                      loginFormStateKey.currentState!.save();
+                                      final LoginUserParams params =
+                                          LoginUserParams(
+                                        email: email.text,
+                                        password: password.text,
+                                      );
+                                      return _submitLoginForm(ref, params);
+                                    }
+                                  }
+                                },
+                                buttonText: "Continue",
+                              );
+                            },
+                            child: AuthSubmitButton(
+                              isLoading: false,
+                              submitForm: () {
+                                {
+                                  if (loginFormStateKey.currentState!
+                                      .validate()) {
+                                    loginFormStateKey.currentState!.save();
+                                    final LoginUserParams params =
+                                        LoginUserParams(
+                                      email: email.text,
+                                      password: password.text,
+                                    );
+                                    return _submitLoginForm(ref, params);
+                                  }
+                                }
+                              },
+                              buttonText: "Continue",
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -318,25 +386,28 @@ class LoginView extends HookConsumerWidget {
             ),
           ],
         ),
-        floatingActionButton: Consumer(
+        /* floatingActionButton: Consumer(
           builder: (context, ref, child) {
             final state = ref.watch(authControllerProvider);
             return AuthSubmitButton(
-            isLoading: state.maybeWhen(loading: () => true,orElse: () => false,),
-            submitForm: () {
-              {
-                if (loginFormStateKey.currentState!.validate()) {
-                  loginFormStateKey.currentState!.save();
-                  final LoginUserParams params = LoginUserParams(
-                    email: email.text,
-                    password: password.text,
-                  );
-                  return _submitLoginForm(ref, params);
+              isLoading: state.maybeWhen(
+                loading: () => true,
+                orElse: () => false,
+              ),
+              submitForm: () {
+                {
+                  if (loginFormStateKey.currentState!.validate()) {
+                    loginFormStateKey.currentState!.save();
+                    final LoginUserParams params = LoginUserParams(
+                      email: email.text,
+                      password: password.text,
+                    );
+                    return _submitLoginForm(ref, params);
+                  }
                 }
-              }
-            },
-            buttonText: "Continue",
-          );
+              },
+              buttonText: "Continue",
+            );
           },
           child: AuthSubmitButton(
             isLoading: false,
@@ -354,7 +425,7 @@ class LoginView extends HookConsumerWidget {
             },
             buttonText: "Continue",
           ),
-        ),
+        ), */
       ),
     );
   }

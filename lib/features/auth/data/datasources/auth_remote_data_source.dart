@@ -26,8 +26,12 @@ class AuthRemoteDataSourceImpl extends DataSource
     } on DioError catch (e) {
       return Left(
         ServerFailure(
-          e.response?.data.toString() ?? e.message,
+          message: e.response?.data.toString() ?? e.message,
         ),
+      );
+    } catch (e) {
+      return const Left(
+        ServerFailure(),
       );
     }
   }
@@ -44,8 +48,12 @@ class AuthRemoteDataSourceImpl extends DataSource
     } on DioError catch (e) {
       return Left(
         ServerFailure(
-          e.response?.data.toString() ?? e.message,
+          message: e.response?.data.toString() ?? e.message,
         ),
+      );
+    } catch (e) {
+      return const Left(
+        ServerFailure(),
       );
     }
   }
