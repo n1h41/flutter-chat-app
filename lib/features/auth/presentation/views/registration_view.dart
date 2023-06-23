@@ -16,9 +16,7 @@ class RegistrationView extends HookConsumerWidget {
   const RegistrationView({super.key});
 
   void _submitRegistrationForm(RegisterUserParams params, WidgetRef ref) async {
-    await ref
-        .read(authControllerProvider.notifier)
-        .registerUser(params);
+    await ref.read(authControllerProvider.notifier).registerUser(params);
   }
 
   @override
@@ -31,7 +29,7 @@ class RegistrationView extends HookConsumerWidget {
     final confirmPassword = useTextEditingController();
     ref.listen(authControllerProvider, (prev, next) {
       next.maybeWhen(
-        registered: () => context.goNamed('userVerificationScreen'),
+        registered: () => context.goNamed(APP_PAGES.loginView.routeName),
         error: (e) {
           if (e is ServerFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -49,7 +47,13 @@ class RegistrationView extends HookConsumerWidget {
     });
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Register account"),
+        backgroundColor: Colors.white,
+        title: const Text(
+          "Register account",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         elevation: 0,
       ),
       body: Container(

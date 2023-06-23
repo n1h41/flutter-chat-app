@@ -1,3 +1,4 @@
+import 'package:chat_app/features/app/controller/module.dart';
 import 'package:chat_app/features/auth/domain/usecases/login_user.dart';
 import 'package:chat_app/features/auth/domain/usecases/module.dart';
 import 'package:chat_app/features/auth/domain/usecases/register_user.dart';
@@ -22,6 +23,7 @@ class AuthController extends _$AuthController {
         state = AuthState.error(l);
       },
       (r) {
+        ref.read(appControllerProvider).loginState = true;
         state = const AuthState.authenticated();
       },
     );

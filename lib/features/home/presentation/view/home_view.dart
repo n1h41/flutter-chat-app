@@ -1,12 +1,22 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
+import 'package:chat_app/features/app/controller/module.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomeView extends StatelessWidget {
+import '../widgets/message_tile.dart';
+
+class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<String> messageTypes = [
+      "All",
+      "Office",
+      "Family",
+      "Archive",
+    ];
+    final selectedMessageTypeIndex = useValueNotifier(0);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -27,7 +37,7 @@ class HomeView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'John Doe',
                         style: TextStyle(
                           fontSize: 20,
@@ -37,17 +47,18 @@ class HomeView extends StatelessWidget {
                       RichText(
                         text: TextSpan(
                           children: [
-                            TextSpan(text: '💼'),
-                            WidgetSpan(
+                            const TextSpan(text: '💼'),
+                            const WidgetSpan(
                               child: SizedBox(width: 5),
                             ),
                             TextSpan(
-                                text: 'At Work',
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(0.8),
-                                ))
+                              text: 'At Work',
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.8),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -61,15 +72,17 @@ class HomeView extends StatelessWidget {
                   PopupMenuButton(
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        child: Text('Logout'),
-                        onTap: () {},
+                        child: const Text('Logout'),
+                        onTap: () {
+                          ref.read(appControllerProvider).loginState = false;
+                        },
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Padding(
@@ -98,42 +111,14 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            // Expanded(
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //         color: Colors.white.withOpacity(0.5),
-            //         borderRadius: BorderRadius.only(
-            //           topLeft: Radius.circular(25),
-            //           topRight: Radius.circular(25),
-            //         ),
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.black.withOpacity(0.1),
-            //             blurRadius: 20,
-            //             spreadRadius: 5,
-            //           ),
-            //         ]),
-            //     child: Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         SizedBox(
-            //           width: 1.sw,
-            //         ),
-            //         Expanded(
-            //           child: ListView(),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25),
                     ),
@@ -152,53 +137,48 @@ class HomeView extends StatelessWidget {
                         vertical: 20,
                         horizontal: 25,
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            'All',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            'Office',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            'Family',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            'Archive',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                        ],
+                      child: ValueListenableBuilder(
+                        valueListenable: selectedMessageTypeIndex,
+                        builder: (context, value, _) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: messageTypes.map(
+                              (item) {
+                                final int index = messageTypes.indexOf(item);
+                                return InkWell(
+                                  onTap: () {
+                                    selectedMessageTypeIndex.value = index;
+                                  },
+                                  child: Text(
+                                    item,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: index == value
+                                          ? Colors.black
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                           horizontal: 10,
                         ),
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 20,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(25),
                           ),
@@ -223,7 +203,7 @@ class HomeView extends StatelessWidget {
                                     size: 12,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
                                 Text(
@@ -235,67 +215,7 @@ class HomeView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Expanded(
-                              child: ListView(
-                                shrinkWrap: true,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        width: 0.20.sw,
-                                        height: 0.20.sw,
-                                        child: Center(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            width: 0.184.sw,
-                                            height: 0.184.sw,
-                                            child: Center(
-                                              child: SizedBox(
-                                                width: 0.16.sw,
-                                                height: 0.16.sw,
-                                                child: CircleAvatar(
-                                                  backgroundColor: Colors.grey,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Emily'),
-                                          Text('Wanna have lunch with me ?'),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text('9:41'),
-                                          Badge.count(
-                                            count: 3,
-                                            backgroundColor: Colors.redAccent,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            const MessageTile(),
                           ],
                         ),
                       ),

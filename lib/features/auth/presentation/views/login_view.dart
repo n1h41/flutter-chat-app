@@ -34,6 +34,7 @@ class LoginView extends HookConsumerWidget {
               content: Text('User logged in successfully'),
             ),
           );
+          context.goNamed(APP_PAGES.homeView.routeName);
         },
         error: (e) {
           if (e is ServerFailure) {
@@ -320,8 +321,8 @@ class LoginView extends HookConsumerWidget {
                             Text("Don't have an account ?"),
                             TextButton(
                               onPressed: () {
-                                context.goNamed(
-                                    APP_PAGES.registerView.routeName);
+                                context
+                                    .goNamed(APP_PAGES.registerView.routeName);
                               },
                               child: Text(
                                 'Register',
