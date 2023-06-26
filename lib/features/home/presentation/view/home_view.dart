@@ -1,4 +1,6 @@
+import 'package:chat_app/core/helpers/module.dart';
 import 'package:chat_app/features/app/controller/module.dart';
+import 'package:chat_app/features/home/presentation/controller/websocket_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,6 +19,26 @@ class HomeView extends HookConsumerWidget {
       "Archive",
     ];
     final selectedMessageTypeIndex = useValueNotifier(0);
+    ref.listen(
+      webSocketControllerProvider.select((value) => value.isConnected),
+      (prev, next) {
+        if ((prev != next) && next) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Connection established'),
+              showCloseIcon: true,
+            ),
+          );
+        } else if ((prev != next) && !next) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Connection lost'),
+              showCloseIcon: true,
+            ),
+          );
+        }
+      },
+    );
     return SafeArea(
       child: Scaffold(
         body: Column(

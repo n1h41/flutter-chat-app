@@ -1,20 +1,15 @@
 import 'package:chat_app/core/configs/config.dart';
 import 'package:chat_app/core/helpers/secure_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
 class WebSocketAgent {
-  WebSocketAgent._();
-
-  static WebSocketAgent? _instance;
-
-  final SecureStorage _storage = SecureStorage.instance;
-
-  static WebSocketAgent get instance {
-    return _instance ?? WebSocketAgent._();
-  }
+  final SecureStorage _storage;
 
   IOWebSocketChannel? channel;
+
+  WebSocketAgent({required SecureStorage storage}) : _storage = storage;
 
   Stream<dynamic>? get stream => channel?.stream;
 
@@ -29,10 +24,14 @@ class WebSocketAgent {
     Map<String, dynamic> headers = {
       "Bearer": accessToken,
     };
-    channel = IOWebSocketChannel.connect(
-      Uri.parse(Config.websocketUrl),
-      headers: headers,
-    );
+    try {
+      channel = IOWebSocketChannel.connect(
+        Uri.parse(Config.websocketUrl),
+        headers: headers,
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void disconnet() {

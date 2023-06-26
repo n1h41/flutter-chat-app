@@ -22,7 +22,7 @@ void main() async {
   runApp(
     ProviderScope(
       overrides: [
-        prefsProvider.overrideWithValue(prefs)
+        prefsProvider.overrideWithValue(prefs),
       ],
       observers: [
         ProviderLogger(
