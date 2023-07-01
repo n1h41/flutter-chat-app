@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$WebsocketState {
   bool get isConnected => throw _privateConstructorUsedError;
-  Stream<dynamic>? get stream => throw _privateConstructorUsedError;
+  StreamSubscription<dynamic>? get subscription =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebsocketStateCopyWith<WebsocketState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $WebsocketStateCopyWith<$Res> {
           WebsocketState value, $Res Function(WebsocketState) then) =
       _$WebsocketStateCopyWithImpl<$Res, WebsocketState>;
   @useResult
-  $Res call({bool isConnected, Stream<dynamic>? stream});
+  $Res call({bool isConnected, StreamSubscription<dynamic>? subscription});
 }
 
 /// @nodoc
@@ -47,17 +48,17 @@ class _$WebsocketStateCopyWithImpl<$Res, $Val extends WebsocketState>
   @override
   $Res call({
     Object? isConnected = null,
-    Object? stream = freezed,
+    Object? subscription = freezed,
   }) {
     return _then(_value.copyWith(
       isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      stream: freezed == stream
-          ? _value.stream
-          : stream // ignore: cast_nullable_to_non_nullable
-              as Stream<dynamic>?,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<dynamic>?,
     ) as $Val);
   }
 }
@@ -70,7 +71,7 @@ abstract class _$$_WebsocketStateCopyWith<$Res>
       __$$_WebsocketStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isConnected, Stream<dynamic>? stream});
+  $Res call({bool isConnected, StreamSubscription<dynamic>? subscription});
 }
 
 /// @nodoc
@@ -85,17 +86,17 @@ class __$$_WebsocketStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isConnected = null,
-    Object? stream = freezed,
+    Object? subscription = freezed,
   }) {
     return _then(_$_WebsocketState(
       isConnected: null == isConnected
           ? _value.isConnected
           : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      stream: freezed == stream
-          ? _value.stream
-          : stream // ignore: cast_nullable_to_non_nullable
-              as Stream<dynamic>?,
+      subscription: freezed == subscription
+          ? _value.subscription
+          : subscription // ignore: cast_nullable_to_non_nullable
+              as StreamSubscription<dynamic>?,
     ));
   }
 }
@@ -103,17 +104,17 @@ class __$$_WebsocketStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_WebsocketState implements _WebsocketState {
-  const _$_WebsocketState({this.isConnected = false, this.stream});
+  const _$_WebsocketState({this.isConnected = false, this.subscription});
 
   @override
   @JsonKey()
   final bool isConnected;
   @override
-  final Stream<dynamic>? stream;
+  final StreamSubscription<dynamic>? subscription;
 
   @override
   String toString() {
-    return 'WebsocketState(isConnected: $isConnected, stream: $stream)';
+    return 'WebsocketState(isConnected: $isConnected, subscription: $subscription)';
   }
 
   @override
@@ -123,11 +124,12 @@ class _$_WebsocketState implements _WebsocketState {
             other is _$_WebsocketState &&
             (identical(other.isConnected, isConnected) ||
                 other.isConnected == isConnected) &&
-            (identical(other.stream, stream) || other.stream == stream));
+            (identical(other.subscription, subscription) ||
+                other.subscription == subscription));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isConnected, stream);
+  int get hashCode => Object.hash(runtimeType, isConnected, subscription);
 
   @JsonKey(ignore: true)
   @override
@@ -139,12 +141,12 @@ class _$_WebsocketState implements _WebsocketState {
 abstract class _WebsocketState implements WebsocketState {
   const factory _WebsocketState(
       {final bool isConnected,
-      final Stream<dynamic>? stream}) = _$_WebsocketState;
+      final StreamSubscription<dynamic>? subscription}) = _$_WebsocketState;
 
   @override
   bool get isConnected;
   @override
-  Stream<dynamic>? get stream;
+  StreamSubscription<dynamic>? get subscription;
   @override
   @JsonKey(ignore: true)
   _$$_WebsocketStateCopyWith<_$_WebsocketState> get copyWith =>

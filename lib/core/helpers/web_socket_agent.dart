@@ -37,4 +37,8 @@ class WebSocketAgent {
   void disconnet() {
     channel?.sink.close(status.goingAway);
   }
+
+  void reconnect() {
+    channel = null;
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'websocket_state.freezed.dart';
@@ -6,6 +8,6 @@ part 'websocket_state.freezed.dart';
 class WebsocketState with _$WebsocketState {
   const factory WebsocketState({
     @Default(false) bool isConnected,
-    Stream? stream,
+    StreamSubscription? subscription,
   }) = _WebsocketState;
 }

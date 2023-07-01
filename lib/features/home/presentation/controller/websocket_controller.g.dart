@@ -7,7 +7,7 @@ part of 'websocket_controller.dart';
 // **************************************************************************
 
 String _$webSocketControllerHash() =>
-    r'541f50fb198f0b5517713391f12a24b54160d0fa';
+    r'a6cd61423b4ae71d76d2555aeb4b835d7c19137d';
 
 /// See also [WebSocketController].
 @ProviderFor(WebSocketController)

@@ -1,8 +1,8 @@
-import 'package:chat_app/core/helpers/module.dart';
 import 'package:chat_app/features/app/controller/module.dart';
 import 'package:chat_app/features/home/presentation/controller/websocket_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../widgets/message_tile.dart';
@@ -19,7 +19,8 @@ class HomeView extends HookConsumerWidget {
       "Archive",
     ];
     final selectedMessageTypeIndex = useValueNotifier(0);
-    ref.listen(
+    final isSearchEnaled = useValueNotifier(false);
+    /* ref.listen(
       webSocketControllerProvider.select((value) => value.isConnected),
       (prev, next) {
         if ((prev != next) && next) {
@@ -38,7 +39,7 @@ class HomeView extends HookConsumerWidget {
           );
         }
       },
-    );
+    ); */
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -49,47 +50,81 @@ class HomeView extends HookConsumerWidget {
                 vertical: 10,
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    radius: 35,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      const Text(
-                        'John Doe',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Stack(
+                        children: [
+                          const CircleAvatar(
+                            radius: 35,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Consumer(builder: (context, ref, _) {
+                              final Color backgroundColor = ref
+                                      .watch(webSocketControllerProvider)
+                                      .isConnected
+                                  ? Colors.lightGreen
+                                  : Colors.red;
+                              return CircleAvatar(
+                                radius: 10.r,
+                                backgroundColor: backgroundColor,
+                              );
+                            }),
+                          ),
+                        ],
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            const TextSpan(text: '💼'),
-                            const WidgetSpan(
-                              child: SizedBox(width: 5),
+                      /* const CircleAvatar(
+                        radius: 35,
+                      ), */
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'John Doe',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
-                            TextSpan(
-                              text: 'At Work',
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.8),
-                              ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                const TextSpan(text: '💼'),
+                                const WidgetSpan(
+                                  child: SizedBox(width: 5),
+                                ),
+                                TextSpan(
+                                  text: 'At Work',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.8),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      isSearchEnaled.value = !isSearchEnaled.value;
+                    },
+                    icon: ValueListenableBuilder(
+                      valueListenable: isSearchEnaled,
+                      builder: (context, value, _) {
+                        return Icon(value ? Icons.close : Icons.search);
+                      },
+                    ),
                   ),
                   PopupMenuButton(
                     itemBuilder: (context) => [
@@ -103,6 +138,47 @@ class HomeView extends HookConsumerWidget {
                   ),
                 ],
               ),
+            ),
+            ValueListenableBuilder(
+              valueListenable: isSearchEnaled,
+              builder: (context, value, _) {
+                return Visibility(
+                  maintainAnimation: true,
+                  maintainState: true,
+                  visible: value,
+                  child: AnimatedOpacity(
+                    onEnd: () {},
+                    opacity: isSearchEnaled.value ? 1 : 0,
+                    curve: Curves.fastOutSlowIn,
+                    duration: const Duration(milliseconds: 500),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.grey.withOpacity(0.1),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 5.h,
+                              vertical: 10.h,
+                            ),
+                            hintText: 'Search',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.withOpacity(0.3),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey.withOpacity(0.9),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(
               height: 30,

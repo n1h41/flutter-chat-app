@@ -19,20 +19,31 @@ class WebSocketController extends _$WebSocketController {
 
   Future<void> establishWebSocketConnection() async {
     final WebSocketAgent agent = ref.watch(webSocketAgentProvider);
+    state = state.copyWith(subscription: null);
     await agent.connect();
-    agent.stream!.listen(
-      (event) {
-        debugPrint(event.toString());
-        state = state.copyWith(isConnected: true);
-      },
-      onError: (error) {
-        debugPrint(error.toString());
-        state = state.copyWith(isConnected: false);
-      },
-      onDone: () {
-        debugPrint("Connection tethered");
-        state = state.copyWith(isConnected: false);
-      }
+    state = state.copyWith(
+      subscription: agent.stream!.listen(
+        (event) {
+          debugPrint(event.toString());
+          state = state.copyWith(isConnected: true);
+        },
+        onError: (error) {
+          debugPrint(error.toString());
+          state = state.copyWith(isConnected: false);
+        },
+        onDone: () {
+          debugPrint("Connection tethered");
+          state = state.copyWith(isConnected: false);
+        },
+      ),
     );
+  }
+
+  Future<void> retryConnection() async {
+    state.subscription?.cancel();
+    final WebSocketAgent agent = ref.watch(webSocketAgentProvider);
+    agent.disconnet();
+    agent.reconnect();
+    await establishWebSocketConnection();
   }
 }

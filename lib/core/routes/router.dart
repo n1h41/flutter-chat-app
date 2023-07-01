@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:chat_app/core/routes/router_utils.dart';
+import 'package:chat_app/core/widgets/connectionStatus/connectionStatus.dart';
 import 'package:chat_app/features/app/controller/app_controller.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,10 +26,17 @@ class AppRouter {
         path: APP_PAGES.loginView.routePath,
         builder: (context, state) => const LoginView(),
       ),
-      GoRoute(
-        name: APP_PAGES.homeView.routeName,
-        path: APP_PAGES.homeView.routePath,
-        builder: (context, state) => const HomeView(),
+      ShellRoute(
+        builder: (context, state, child) {
+          return ConnectionStatus(child: child);
+        },
+        routes: [
+          GoRoute(
+            name: APP_PAGES.homeView.routeName,
+            path: APP_PAGES.homeView.routePath,
+            builder: (context, state) => const HomeView(),
+          ),
+        ],
       ),
     ],
     redirect: (context, state) {
