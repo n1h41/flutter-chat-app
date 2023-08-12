@@ -9,7 +9,7 @@ import '../../../../fixtures/fixture_reader.dart';
 void main() {
   late Map<String, dynamic> json;
   setUp(() {
-    json = jsonDecode(fixture('user_model.json'));
+    json = jsonDecode(readFixture('user_model.json'));
   });
 
   test('should be a subclass of User entity', () {

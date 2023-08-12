@@ -1,3 +1,6 @@
 import 'dart:io';
 
-String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
+/// Reads a file from the fixtures directory.
+/// Pass the file name without the path.
+String readFixture(String name) =>
+    File('test/fixtures/$name').readAsStringSync();
