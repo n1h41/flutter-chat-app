@@ -20,26 +20,19 @@ class HomeView extends HookConsumerWidget {
     ];
     final selectedMessageTypeIndex = useValueNotifier(0);
     final isSearchEnaled = useValueNotifier(false);
-    /* ref.listen(
-      webSocketControllerProvider.select((value) => value.isConnected),
-      (prev, next) {
-        if ((prev != next) && next) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Connection established'),
-              showCloseIcon: true,
-            ),
-          );
-        } else if ((prev != next) && !next) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Connection lost'),
-              showCloseIcon: true,
-            ),
-          );
-        }
+    useEffect(
+      () {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          if (ref.read(appControllerProvider).loginState) {
+            await ref
+                .read(webSocketControllerProvider.notifier)
+                .establishWebSocketConnection();
+          }
+        });
+        return null;
       },
-    ); */
+      const [],
+    );
     return SafeArea(
       child: Scaffold(
         body: Column(

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/helpers/secure_storage.dart';
-import '../../../../core/helpers/storage.dart';
 import '../../domain/entitites/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_user.dart';
@@ -11,10 +11,11 @@ import '../datasources/auth_remote_data_source.dart';
 import '../models/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this.dataSource, this.storage);
+  AuthRepositoryImpl(this.dataSource, this.storage, this.prefs);
 
   final AuthRemoteDataSource dataSource;
   final SecureStorage storage;
+  final SharedPreferences prefs;
 
   void saveTokens({required Map<String, dynamic> tokens}) async {
     await storage.write('accessToken', tokens['accessToken']);
@@ -29,7 +30,8 @@ class AuthRepositoryImpl implements AuthRepository {
         return Left(failure);
       },
       (loginResponse) async {
-        await Storage().setValue<bool>('isLoggedIn', true);
+        // await Storage().setValue<bool>('isLoggedIn', true);
+        await prefs.setBool('isLoggedIn', true);
         saveTokens(tokens: loginResponse);
         return Right(UserModel.fromJson(loginResponse['payload']));
       },

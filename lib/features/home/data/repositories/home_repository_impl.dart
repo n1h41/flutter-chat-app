@@ -11,7 +11,6 @@ class HomeRepostoryImpl implements HomeRepository {
 
   @override
   Future<Either<Failure, bool>> logout() async {
-    // TODO: implement logout
     try {
       await secureStorage.deleteAll();
       return const Right(true);

@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:chat_app/core/routes/router_utils.dart';
-import 'package:chat_app/core/widgets/connectionStatus/connectionStatus.dart';
+import 'package:chat_app/core/widgets/connectionStatus/connection_status.dart';
 import 'package:chat_app/features/app/controller/app_controller.dart';
 import 'package:go_router/go_router.dart';
 

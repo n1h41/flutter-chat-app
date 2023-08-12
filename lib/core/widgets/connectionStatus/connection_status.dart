@@ -35,12 +35,12 @@ class ConnectionStatus extends StatelessWidget {
                       fontSize: 12.sp,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   TextButton(
                     onPressed: () {
                       ref.read(webSocketControllerProvider.notifier).retryConnection();
                     },
-                    child: Text(
+                    child: const Text(
                       "Retry",
                       style: TextStyle(
                         color: Colors.green,

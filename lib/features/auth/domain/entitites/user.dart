@@ -20,19 +20,6 @@ class User extends Equatable {
     this.verified,
   });
 
-  @override
-  List<Object?> get props {
-    return [
-      firstName,
-      lastName,
-      email,
-      password,
-      verificationCode,
-      passwordResetCode,
-      verified,
-    ];
-  }
-
   User copyWith({
     String? firstName,
     String? lastName,
@@ -51,5 +38,18 @@ class User extends Equatable {
       passwordResetCode: passwordResetCode ?? this.passwordResetCode,
       verified: verified ?? this.verified,
     );
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      firstName,
+      lastName,
+      email,
+      password,
+      verificationCode,
+      passwordResetCode,
+      verified,
+    ];
   }
 }

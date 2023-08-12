@@ -2,7 +2,6 @@ import 'package:chat_app/core/routes/module.dart';
 import 'package:chat_app/core/routes/router.dart';
 import 'package:chat_app/core/theme/app_theme.dart';
 import 'package:chat_app/features/app/controller/module.dart';
-import 'package:chat_app/features/home/presentation/controller/websocket_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,13 +16,6 @@ class ChatApp extends HookConsumerWidget {
     useEffect(
       () {
         ref.read(appControllerProvider).init();
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-          if (ref.read(appControllerProvider).loginState) {
-            await ref
-                .read(webSocketControllerProvider.notifier)
-                .establishWebSocketConnection();
-          }
-        });
         return null;
       },
       const [],
